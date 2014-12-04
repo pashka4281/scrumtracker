@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scrumtracker</title>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= csrf_meta_tags %>
+  <%= render 'shared/javascripts' %>
+</head>
+<body ng-app="scrumTracker">
+
+<%= yield %>
+
+</body>
+</html>
