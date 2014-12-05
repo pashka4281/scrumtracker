@@ -1,0 +1,42 @@
+<h4>
+  <a href="#/projects">Projects</a> >> {{ project.title }}
+</h4>
+
+<div id="board">
+
+  <div class="list-wrapper" style="left: 0%;">
+    <div class="storiesList" id="coldBox" ng-show="isShownList.coldbox">
+      <div class="list-header">Cold box</div>
+      <ul class="list-content">
+        <li ng-repeat="story in stories">
+          <a class="expand-link" href="javascript:void(0)">
+            <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
+            <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
+          </a>
+          <input type="text" class="story-id" disabled="true" value="#{{ story.id }}"></input>
+          {{ story.title }}
+          <div class="story-content" ng-show="story.isExpanded">
+            <p>{{ story.description }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="list-wrapper" style="left: 33.3333333%;">
+    <div class="storiesList" id="current" ng-show="isShownList.current">
+      <div class="list-header">Current</div>
+      <ul class="list-content"></ul>
+    </div>
+  </div>
+
+  <div class="list-wrapper" style="left: 66.6666666%;">
+    <div class="storiesList" id="planned" ng-show="isShownList.planned">
+      <div class="list-header">Planned</div>
+      <ul class="list-content"></ul>
+    </div>
+  </div>
+
+</div>
+
+

@@ -9,4 +9,13 @@ RSpec.describe Api::ProjectsController, :type => :controller do
       expect(assigns[:projects].count).to eq(2)
     end
   end
+  
+  describe '#show' do
+    it 'should load project by id' do
+      project = create(:project) 
+
+      get :show, id: project.id, format: 'json'
+      expect(assigns[:project]).to eq(project)
+    end
+  end
 end
