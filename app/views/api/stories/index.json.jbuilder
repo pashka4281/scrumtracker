@@ -1,1 +1,1 @@
-json.array! @stories, :id, :title, :description
+json.array! @stories, :id, :title, :description, :board

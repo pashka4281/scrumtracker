@@ -15,4 +15,8 @@ angular.module('projects.controllers', [])
     coldbox: true
     current: true
     planned: true
+
+  $scope.storiesForBoard = (boardName)->
+    _.filter $scope.stories, (story)->
+      story.board is boardName
 ])

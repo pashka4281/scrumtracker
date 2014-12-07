@@ -9,6 +9,7 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
+//= require underscore-min
 //= require_tree .
-// require projects/controllers
+//= require textarea-autogrow
 //= require ng_init

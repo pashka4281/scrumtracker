@@ -1,6 +1,7 @@
 sTracker = angular.module 'scrumTracker', [
   'ngResource'
   'ngRoute'
+  'txtareaAutogrow'
   'projects.resources'
   'projects.controllers'
   'projects.routes'

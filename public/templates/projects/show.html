@@ -1,42 +1,108 @@
-<h4>
-  <a href="#/projects">Projects</a> >> {{ project.title }}
-</h4>
 
-<div id="board">
+<section id="board">
+  <aside id="sidemenu">
+    <div id="">
+      <a href="#/projects">Projects</a> >> {{ project.title }}
+    </div>
+    <input type="search"></input>
+  </aside>
 
-  <div class="list-wrapper" style="left: 0%;">
-    <div class="storiesList" id="coldBox" ng-show="isShownList.coldbox">
-      <div class="list-header">Cold box</div>
-      <ul class="list-content">
-        <li ng-repeat="story in stories">
-          <a class="expand-link" href="javascript:void(0)">
-            <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
-            <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
-          </a>
-          <input type="text" class="story-id" disabled="true" value="#{{ story.id }}"></input>
-          {{ story.title }}
-          <div class="story-content" ng-show="story.isExpanded">
-            <p>{{ story.description }}</p>
-          </div>
-        </li>
-      </ul>
+  <div id="lists">
+    <div class="list-wrapper" style="left: 0;">
+      <div class="storiesList" id="coldBox" ng-show="isShownList.coldbox">
+        <div class="list-header">
+          <h3>Cold box</h3>
+          <a class="add-story" href="javascript:void(0)">+</a>
+        </div>
+        <ul class="list-content">
+
+          <li ng-repeat="story in storiesForBoard('coldbox')" ng-class="{'expanded': story.isExpanded}">
+            <div class="story-title" ng-hide="story.isExpanded">
+              <a class="expand-link" href="javascript:void(0)">
+                <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
+              </a>
+              {{ story.title }}
+            </div>
+            <div class="story-content" ng-show="story.isExpanded">
+              <div class="edit-title">
+                <a class="expand-link" href="javascript:void(0)">
+                  <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
+                </a>
+                <textarea class="input-std" auto-grow ng-model="story.title"></textarea>
+              </div>
+
+              <div class="story-actions">
+                <div class="input-group">
+                  <span class="input-group-addon input-group-xs">ID</span>
+                  <input type="text" class="story-id" disabled="true" value="{{ story.id }}"></input>
+                  <input type="button" class="btn btn-primary btn-xs save-story" value="Close & save"></input>
+                </div>
+              </div>
+
+              <ul class="story-info list-group">
+                <li class="list-group-item">
+                  <span>story type</span>
+                  <div>Task</div>
+                </li>
+                <li class="list-group-item">
+                  <span>requester</span>
+                  <div>Pavlo Sirous</div>
+                </li>
+                <li class="list-group-item">
+                  <span>points</span>
+                  <div>0</div>
+                </li>
+              </ul>
+              
+              <div class="story-description">
+                <label>DESCRIPTION</label>
+                <textarea class="input-std" auto-grow ng-model="story.description"></textarea>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    
+    <div class="list-wrapper" style="left: 400px;">
+      <div class="storiesList" id="current" ng-show="isShownList.current">
+        <div class="list-header">
+          <h3>Current</h3>
+        </div>
+        <ul class="list-content">
+          <li ng-repeat="story in storiesForBoard('current')">
+            <div class="story-title" ng-hide="story.isExpanded">
+              <a class="expand-link" href="javascript:void(0)">
+                <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
+              </a>
+              {{ story.title }}
+            </div>
+            <div class="story-content" ng-show="story.isExpanded">
+              <div class="edit-title">
+                <a class="expand-link" href="javascript:void(0)">
+                  <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
+                </a>
+                <textarea class="input-std" auto-grow ng-model="story.title"></textarea>
+              </div>
+
+              <input type="text" class="story-id" disabled="true" value="#{{ story.id }}"></input>
+              <p>{{ story.description }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="list-wrapper" style="left: 800px;">
+      <div class="storiesList" id="planned" ng-show="isShownList.planned">
+        <div class="list-header">
+          <h3>Planned</h3>
+        </div>
+        <ul class="list-content"></ul>
+      </div>
     </div>
   </div>
-  
-  <div class="list-wrapper" style="left: 33.3333333%;">
-    <div class="storiesList" id="current" ng-show="isShownList.current">
-      <div class="list-header">Current</div>
-      <ul class="list-content"></ul>
-    </div>
-  </div>
-
-  <div class="list-wrapper" style="left: 66.6666666%;">
-    <div class="storiesList" id="planned" ng-show="isShownList.planned">
-      <div class="list-header">Planned</div>
-      <ul class="list-content"></ul>
-    </div>
-  </div>
-
-</div>
 
 
+</section>
