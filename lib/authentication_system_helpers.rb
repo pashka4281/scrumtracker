@@ -9,7 +9,7 @@ module AuthenticationSystemHelpers
 
   def authorize
     if request.xhr?
-      render nothing: true, status: 401 # HTTP 401: not authorized
+      render nothing: true, status: 401 if current_user.nil? # HTTP 401: not authorized
     else
       redirect_to :new_sessions, alert: t('controllers.sessions.not_authorized') if current_user.nil?
     end

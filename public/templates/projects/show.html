@@ -15,7 +15,12 @@
         </div>
         <ul class="list-content">
 
-          <li ng-repeat="story in storiesForBoard('coldbox')" ng-class="{'expanded': story.isExpanded}" ng-include="'storyTemplate.html'"></li>
+          <li 
+            ng-repeat="story in storiesForBoard('coldbox')"
+            ng-controller="StoryCtrl"
+            ng-class="{'expanded': story.isExpanded}"
+            ng-include="'storyTemplate.html'">
+          </li>
 
         </ul>
       </div>
@@ -47,16 +52,16 @@
 
 <!-- Story template -->
 <script type="text/ng-template" id="storyTemplate.html">
-  <div class="story-title" ng-hide="story.isExpanded">
+  <div class="story-title" ng-hide="isExpanded">
     <a class="expand-link" href="javascript:void(0)">
-      <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
+      <span class="glyphicon glyphicon-chevron-right" ng-hide="isExpanded" ng-click="toggleStory()"></span>
     </a>
     {{ story.title }}
   </div>
-  <div class="story-content" ng-show="story.isExpanded">
+  <div class="story-content" ng-show="isExpanded">
     <div class="edit-title">
       <a class="expand-link" href="javascript:void(0)">
-        <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
+        <span class="glyphicon glyphicon-chevron-down" ng-show="isExpanded" ng-click="toggleStory()"></span>
       </a>
       <textarea class="input-std" auto-grow ng-model="story.title"></textarea>
     </div>
@@ -65,7 +70,7 @@
       <div class="input-group">
         <span class="input-group-addon input-group-xs">ID</span>
         <input type="text" class="story-id" disabled="true" value="{{ story.id }}"></input>
-        <input type="button" class="btn btn-primary btn-xs save-story" value="Close & save"></input>
+        <input type="button" class="btn btn-primary btn-xs save-story" value="Close & save" ng-click="closeAndSave()"></input>
       </div>
     </div>
 
@@ -74,8 +79,6 @@
         <span>story type</span>
         <div>
           <select class="form-control" ng-model="story.type" story-type-input ng-options="label for label in storyTypes"></select>
-          <!-- <button type="button" class="btn btn-default btn-xs" story-type-input="true" placement="bottom-right" ng-model="story.storyType" data-html="1" data-animation="am-flip-x" ng-options="s.value as s.label for s in storyTypes" bs-select>
-          </button> -->
         </div>
       </li>
       <li class="list-group-item">

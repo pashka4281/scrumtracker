@@ -58,5 +58,27 @@ RSpec.describe Api::StoriesController, :type => :controller do
   end
 
   describe 'PUT #update' do
+    let(:project){ create :project }
+    let(:story){ create :story, project: project }
+
+    before do
+      @update_params = { title: "new title", description: "Some text for description", points: 3 }
+    end
+
+    it 'should not update if not logged in' do
+      xhr :put, :update, story: @update_params, id: story.id, project_id: project.id, format: 'json'
+      expect(response.status).to eq(401)
+    end
+
+    context 'authenticated' do
+      before do
+        sign_in create(:user)
+      end
+
+      it 'should update story' do
+        expect{ xhr :put, :update, story: @update_params, id: story.id, project_id: project.id, format: 'json' }.to change { story.reload.title }
+      end
+    end
+
   end
 end
