@@ -81,4 +81,28 @@ RSpec.describe Api::StoriesController, :type => :controller do
     end
 
   end
+
+  describe 'POST #create' do
+    let(:project){ create :project }
+
+    before do
+      @update_params = { title: "new title", description: "Some text for description", points: 3 }
+    end
+
+    it 'should not create if not logged in' do
+      xhr :post, :create, story: @update_params, project_id: project.id, format: 'json'
+      expect(response.status).to eq(401)
+    end
+
+    context 'authenticated' do
+      before do
+        sign_in create(:user)
+      end
+
+      it 'should create story' do
+        expect{ xhr :post, :create, story: @update_params, project_id: project.id, format: 'json' }.to change { Story.count }
+      end
+    end
+
+  end
 end
