@@ -36,6 +36,14 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
 end
+
+group :test, :development do
+  gem 'jazz_hands'
+  gem 'pry', '~> 0.9.12.2'
+  gem 'pry-rails', '~> 0.3.1'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer', '~> 0.4.9'
+end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
