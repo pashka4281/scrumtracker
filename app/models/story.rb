@@ -1,5 +1,5 @@
 class Story < ActiveRecord::Base
   belongs_to :project
-  # belongs_to :user
+  belongs_to :user
   validates :title, presence: true
 end

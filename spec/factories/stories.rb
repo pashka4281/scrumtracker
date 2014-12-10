@@ -2,12 +2,12 @@
 
 FactoryGirl.define do
   factory :story do
-    title "MyString"
+    title "Some story"
     description "MyText"
-    project_id 1
-    type ""
-    user_id 1
-    state "MyString"
+    association :project
+    type "Story::Task"
+    association :user
+    state "unstarted"
     points 1
   end
 end

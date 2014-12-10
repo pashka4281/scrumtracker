@@ -4,7 +4,6 @@
     <div id="">
       <a href="#/projects">Projects</a> >> {{ project.title }}
     </div>
-    <input type="search"></input>
   </aside>
 
   <div id="lists">
@@ -16,50 +15,7 @@
         </div>
         <ul class="list-content">
 
-          <li ng-repeat="story in storiesForBoard('coldbox')" ng-class="{'expanded': story.isExpanded}">
-            <div class="story-title" ng-hide="story.isExpanded">
-              <a class="expand-link" href="javascript:void(0)">
-                <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
-              </a>
-              {{ story.title }}
-            </div>
-            <div class="story-content" ng-show="story.isExpanded">
-              <div class="edit-title">
-                <a class="expand-link" href="javascript:void(0)">
-                  <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
-                </a>
-                <textarea class="input-std" auto-grow ng-model="story.title"></textarea>
-              </div>
-
-              <div class="story-actions">
-                <div class="input-group">
-                  <span class="input-group-addon input-group-xs">ID</span>
-                  <input type="text" class="story-id" disabled="true" value="{{ story.id }}"></input>
-                  <input type="button" class="btn btn-primary btn-xs save-story" value="Close & save"></input>
-                </div>
-              </div>
-
-              <ul class="story-info list-group">
-                <li class="list-group-item">
-                  <span>story type</span>
-                  <div>Task</div>
-                </li>
-                <li class="list-group-item">
-                  <span>requester</span>
-                  <div>Pavlo Sirous</div>
-                </li>
-                <li class="list-group-item">
-                  <span>points</span>
-                  <div>0</div>
-                </li>
-              </ul>
-              
-              <div class="story-description">
-                <label>DESCRIPTION</label>
-                <textarea class="input-std" auto-grow ng-model="story.description"></textarea>
-              </div>
-            </div>
-          </li>
+          <li ng-repeat="story in storiesForBoard('coldbox')" ng-class="{'expanded': story.isExpanded}" ng-include="'storyTemplate.html'"></li>
 
         </ul>
       </div>
@@ -71,25 +27,7 @@
           <h3>Current</h3>
         </div>
         <ul class="list-content">
-          <li ng-repeat="story in storiesForBoard('current')">
-            <div class="story-title" ng-hide="story.isExpanded">
-              <a class="expand-link" href="javascript:void(0)">
-                <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
-              </a>
-              {{ story.title }}
-            </div>
-            <div class="story-content" ng-show="story.isExpanded">
-              <div class="edit-title">
-                <a class="expand-link" href="javascript:void(0)">
-                  <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
-                </a>
-                <textarea class="input-std" auto-grow ng-model="story.title"></textarea>
-              </div>
-
-              <input type="text" class="story-id" disabled="true" value="#{{ story.id }}"></input>
-              <p>{{ story.description }}</p>
-            </div>
-          </li>
+          <li ng-repeat="story in storiesForBoard('current')" ng-class="{'expanded': story.isExpanded}" ng-include="'storyTemplate.html'"></li>
         </ul>
       </div>
     </div>
@@ -101,8 +39,70 @@
         </div>
         <ul class="list-content"></ul>
       </div>
-    </div>
+    </div> 
   </div>
 
 
 </section>
+
+<!-- Story template -->
+<script type="text/ng-template" id="storyTemplate.html">
+  <div class="story-title" ng-hide="story.isExpanded">
+    <a class="expand-link" href="javascript:void(0)">
+      <span class="glyphicon glyphicon-chevron-right" ng-hide="story.isExpanded" ng-click="story.isExpanded=true"></span>
+    </a>
+    {{ story.title }}
+  </div>
+  <div class="story-content" ng-show="story.isExpanded">
+    <div class="edit-title">
+      <a class="expand-link" href="javascript:void(0)">
+        <span class="glyphicon glyphicon-chevron-down" ng-show="story.isExpanded" ng-click="story.isExpanded=false"></span>
+      </a>
+      <textarea class="input-std" auto-grow ng-model="story.title"></textarea>
+    </div>
+
+    <div class="story-actions">
+      <div class="input-group">
+        <span class="input-group-addon input-group-xs">ID</span>
+        <input type="text" class="story-id" disabled="true" value="{{ story.id }}"></input>
+        <input type="button" class="btn btn-primary btn-xs save-story" value="Close & save"></input>
+      </div>
+    </div>
+
+    <ul class="story-info list-group">
+      <li class="list-group-item story-type-row">
+        <span>story type</span>
+        <div>
+          <select class="form-control" ng-model="story.type" story-type-input ng-options="label for label in storyTypes"></select>
+          <!-- <button type="button" class="btn btn-default btn-xs" story-type-input="true" placement="bottom-right" ng-model="story.storyType" data-html="1" data-animation="am-flip-x" ng-options="s.value as s.label for s in storyTypes" bs-select>
+          </button> -->
+        </div>
+      </li>
+      <li class="list-group-item">
+        <span>requester</span>
+        <div>Pavlo Sirous</div>
+      </li>
+      <li class="list-group-item points-row">
+        <span>points</span>
+        <div>
+
+          <div class="input-group points-switcher">
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-xs" type="button" ng-click="removePoints(story)">-</button>
+            </span>
+            <input type="text" class="form-control" ng-model="story.points" readonly>
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-xs" type="button" ng-click="addPoints(story)">+</button>
+            </span>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+    
+    <div class="story-description">
+      <label>DESCRIPTION</label>
+      <textarea class="input-std" auto-grow ng-model="story.description"></textarea>
+    </div>
+  </div>
+</script>
