@@ -105,4 +105,36 @@ RSpec.describe Api::StoriesController, :type => :controller do
     end
 
   end
+
+
+  describe 'DELETE #destroy' do
+    it 'should redirect guests' do
+      project = create :project
+      story = create(:story, project: project) 
+
+      xhr :delete, :destroy, project_id: project.id, id: story.id, format: 'json'
+      expect(response.status).to eq(401)
+    end
+
+    context 'authenticated' do
+      before do
+        sign_in create(:user)
+      end
+
+      it 'should destroy story' do
+        project = create :project
+        story = create(:story, project: project) 
+
+        expect{
+          xhr :delete, :destroy, project_id: project.id, id: story.id, format: 'json'
+        }.to change { Story.count }.by(-1)
+      end
+
+      it 'should raise exception if project_id is missing' do
+        story = create(:story)
+        expect{ xhr :delete, :destroy, id: story.id, format: 'json' }.to raise_error(ActionController::ParameterMissing)
+      end      
+    end
+
+  end
 end

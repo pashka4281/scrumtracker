@@ -7,7 +7,7 @@ angular.module('stories.controllers', [])
   $scope.storyTypes = ['Task', 'Bug', 'Chore']
   $scope.isExpanded = false
 
-  $scope.closeAndSave = (onSave)->
+  $scope.updateStory = (onSave)->
     $scope.story.$update({ project_id: $scope.project_id }, onSave)
 
   $scope.removePoints = (story) ->
@@ -24,8 +24,12 @@ angular.module('stories.controllers', [])
 
   $scope.toggleStory = ->
     if $scope.isExpanded
-      $scope.closeAndSave ->
+      $scope.updateStory ->
         $scope.isExpanded = !$scope.isExpanded
     else
       $scope.isExpanded = !$scope.isExpanded
+
+   $scope.removeStory = ->
+     if confirm("Confirming removing this story?")
+       $scope.story.$delete project_id: $scope.project_id
 ])

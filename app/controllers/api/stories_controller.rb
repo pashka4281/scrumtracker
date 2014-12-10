@@ -25,6 +25,12 @@ class Api::StoriesController < Api::BaseController
       render nothing: true, status: 403 # forbidden
     end
   end
+
+  def destroy
+    @story = current_project.stories.find params[:id]  
+    @story.destroy
+    render nothing: true, status: 200
+  end
  
   private
 

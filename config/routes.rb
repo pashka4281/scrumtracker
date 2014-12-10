@@ -2,7 +2,7 @@ Scrumtracker::Application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     resources :projects, only: %i(index show)
-    resources :stories, only: %i(index show update create)
+    resources :stories, only: %i(index show update create destroy)
   end
 
   get "/login", to: 'sessions#new', as: :new_sessions
